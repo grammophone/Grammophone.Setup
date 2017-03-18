@@ -96,7 +96,7 @@ namespace Grammophone.Setup
 		/// <summary>
 		/// Disposes the underlying dependency injection container.
 		/// </summary>
-		void IDisposable.Dispose()
+		public void Dispose()
 		{
 			diContainer.Dispose();
 		}
