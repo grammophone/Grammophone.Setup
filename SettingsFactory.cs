@@ -20,7 +20,7 @@ namespace Grammophone.Setup
 	{
 		#region Private fields
 
-		private DisposableMRUCache<string, Settings> settingsCache;
+		private MRUCache<string, Settings> settingsCache;
 
 		#endregion
 
@@ -33,7 +33,7 @@ namespace Grammophone.Setup
 		public SettingsFactory(int cacheSize = 2048)
 		{
 			settingsCache = 
-				new DisposableMRUCache<string, Settings>(Settings.Load<C>, cacheSize);
+				new MRUCache<string, Settings>(Settings.Load<C>, cacheSize);
 		}
 
 		#endregion
@@ -52,9 +52,34 @@ namespace Grammophone.Setup
 		}
 
 		/// <summary>
-		/// Disposes all settings in the cache.
+		/// Flushes and disposes all settings in the cache.
 		/// </summary>
 		public void Dispose()
+		{
+			FlushAll();
+		}
+
+		/// <summary>
+		/// Attempt to flush and dispose existing cached settings under a configuration section name.
+		/// If the settings existed in the cache, a subsequent call to <see cref="Get(string)"/>
+		/// for the configuration section name
+		/// will cause the settings to be reloaded and reconfigured.
+		/// </summary>
+		/// <param name="configurationSectionName">The name of the configuration section.</param>
+		/// <returns>Returns true if the settings were found in the cache and removed, else returns false.</returns>
+		public bool Flush(string configurationSectionName)
+		{
+			if (configurationSectionName == null) throw new ArgumentNullException(nameof(configurationSectionName));
+
+			return settingsCache.Remove(configurationSectionName);
+		}
+
+		/// <summary>
+		/// Flushes and removes all settings in the cache.
+		/// Subsequent calls to <see cref="Get(string)"/>
+		/// will cause the settings to be reloaded and reconfigured.
+		/// </summary>
+		public void FlushAll()
 		{
 			settingsCache.Clear();
 		}
