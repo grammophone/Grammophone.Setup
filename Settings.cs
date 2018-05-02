@@ -115,6 +115,14 @@ namespace Grammophone.Setup
 																														select r.Name;
 
 		/// <summary>
+		/// Resolve all instances registered under a non-default name for type <typeparamref name="T"/>
+		/// and return them in a dictionary under their registration names.
+		/// </summary>
+		/// <typeparam name="T">The type for which the instances are registered.</typeparam>
+		public IReadOnlyDictionary<string, T> ResolveAllToDictionary<T>()
+			=> GetRegistrationNames<T>().Where(n => n != null).ToDictionary(n => n, n => Resolve<T>(n));
+
+		/// <summary>
 		/// Disposes the underlying dependency injection container.
 		/// </summary>
 		public void Dispose()
