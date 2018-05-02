@@ -74,7 +74,7 @@ namespace Grammophone.Setup
 		#region Public methods
 
 		/// <summary>
-		/// Resolve an instance registered for type <typeparamref name="T"/>.
+		/// Resolve an instance registered for type <typeparamref name="T"/> under the default name.
 		/// </summary>
 		/// <typeparam name="T">The type for which the instance is registered.</typeparam>
 		public T Resolve<T>() => diContainer.Resolve<T>();
@@ -92,6 +92,27 @@ namespace Grammophone.Setup
 		/// </summary>
 		/// <typeparam name="T">The type for which the instances are registered.</typeparam>
 		public IEnumerable<T> ResolveAll<T>() => diContainer.ResolveAll<T>();
+
+		/// <summary>
+		/// Check whether a type has been registered under the default name.
+		/// </summary>
+		/// <typeparam name="T">The type to check.</typeparam>
+		public bool IsRegistered<T>() => diContainer.IsRegistered<T>();
+
+		/// <summary>
+		/// Check whether a type has been registered under a name.
+		/// </summary>
+		/// <typeparam name="T">The type to check.</typeparam>
+		/// <param name="name">The name under which the type would be registered.</param>
+		public bool IsRegistered<T>(string name) => diContainer.IsRegistered<T>(name);
+
+		/// <summary>
+		/// Get the collection of names under which a type is registered. The default name is returned as null.
+		/// </summary>
+		/// <typeparam name="T">The type to check.</typeparam>
+		public IEnumerable<string> GetRegistrationNames<T>() => from r in diContainer.Registrations
+																														where r.RegisteredType == typeof(T)
+																														select r.Name;
 
 		/// <summary>
 		/// Disposes the underlying dependency injection container.
