@@ -24,10 +24,11 @@ namespace Grammophone.Setup
 		/// Create.
 		/// </summary>
 		/// <param name="configurationSectionName">The name of a Unity configuration section.</param>
-		/// <param name="configurator">configurator for the dependency injection container.</param>
+		/// <param name="configurator">Configurator for the dependency injection container.</param>
 		private Settings(string configurationSectionName, Configurator configurator)
 		{
 			if (configurationSectionName == null) throw new ArgumentNullException(nameof(configurationSectionName));
+			if (configurator == null) throw new ArgumentNullException(nameof(configurator));
 
 			this.ConfigurationSectionName = configurationSectionName;
 
