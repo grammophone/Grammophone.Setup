@@ -21,6 +21,17 @@ namespace Grammophone.Setup
 		#region Construction
 
 		/// <summary>
+		/// Create from a Unity container.
+		/// </summary>
+		/// <param name="diContainer">The Unity container</param>
+		public Settings(IUnityContainer diContainer)
+		{
+			if (diContainer == null) throw new ArgumentNullException(nameof(diContainer));
+
+			this.diContainer = diContainer;
+		}
+
+		/// <summary>
 		/// Create.
 		/// </summary>
 		/// <param name="configurationSectionName">The name of a Unity configuration section.</param>
