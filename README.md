@@ -1,5 +1,5 @@
 # Grammophone.Setup
-This library abstracts the Unity dependency injection framework and helps discriminating between the phase of loading 
+This .NET Standard 2.0 library abstracts the Unity dependency injection framework and helps discriminating between the phase of loading 
 and setting up the container and the phase of using it to resolve instances.
 
 Loading and setting up a container is taken care by `Configurator` descendants by implementing the method `Configure`.
